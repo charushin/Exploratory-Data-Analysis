@@ -1,0 +1,22 @@
+library(plotly)
+
+df = read.table("ILINet.csv",header=TRUE,sep=",")
+df = df[(df$YEAR == 2009 & df$WEEK>=40) | df$YEAR > 2009,]
+
+df$percentageILIVisit = df$ILITOTAL / df$TOTAL.PATIENTS
+df$SEASON = ifelse(df$WEEK<40,paste(df$YEAR-1,df$YEAR,sep="-"),paste(df$YEAR,df$YEAR+1,sep="-"))
+
+y=append(40:53,1:39)
+#y=as.character(y)
+df$WEEK <- as.character(df$WEEK)
+df$WEEK <- factor(df$WEEK, levels = y)
+
+plot_ly(df, x = ~WEEK, y = ~ILITOTAL, type = 'scatter', mode="markers+lines", name = 'A') %>%
+  layout(
+    type = 'groupby',
+    groups = ~SEASON,
+    title = "Percentage of Visits to Influenza Like Illness",
+    xaxis = list(title="Week"),
+    yaxis = list(title="% visits to ILU")
+  )
+

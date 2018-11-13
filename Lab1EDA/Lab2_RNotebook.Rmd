@@ -1,0 +1,37 @@
+```{r}
+#influenza national summary
+infNatSum<-read.csv(file.choose())
+barplot(infNatSum$TOTAL.SPECIMENS,infNatSum$WEEK,main="Influenza National Summary")
+```
+
+```{r}
+# influenza sub type
+infSubtype<-read.csv(file.choose())
+infSubtype
+
+```
+
+```{r}
+#influenza heat map
+library(ggplot2)
+infHeatData<-read.csv(file.choose())
+states <- map_data("state")
+head(infHeatData)
+sim_data <- data.frame(region=unique(tolower(infHeatData$STATENAME)), ACTIVITY.LEVEL)
+sim_data_geo <- merge(states, sim_data, by="region")
+qplot(long, lat, data=sim_data_geo, geom="polygon", fill=ACTIVITY.LEVEL, group=group)
+```
+
+```{r}
+#influenza like illness data
+iliData<-read.table(file.choose())
+iliData
+```
+
+```{r}
+#influenza mortality data
+infMData<-read.csv(file.choose())
+x_coor<-c(infMData$Week)
+plot(x_coor,infMData$Percent.of.Deaths.Due.to.Pneumonia.and.Influenza)
+```
+

@@ -1,0 +1,17 @@
+library(plotly)
+packageVersion('plotly')
+
+df<-read.table("Genetic04.csv",header=TRUE,sep=",")
+
+p <- plot_ly(df, 
+             labels = ~X.Sub.type,
+             values = ~Number,
+             textinfo ="value",
+             type = 'pie',
+             textposition="inside",
+             showlegend=TRUE,
+             legendgroup=~X.Sub.type) %>%
+  layout(title = 'Influenza Positive Specimens Reported by U.S Public Health \nLaboratories,Cumulative, 2017-2018 season',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+p
